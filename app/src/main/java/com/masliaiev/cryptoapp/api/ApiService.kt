@@ -1,6 +1,7 @@
 package com.masliaiev.cryptoapp.api
 
 import com.masliaiev.cryptoapp.pojo.CoinInfoListOfData
+import com.masliaiev.cryptoapp.pojo.CoinPriceInfoRawData
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -9,18 +10,18 @@ interface ApiService {
 
     @GET("top/totalvolfull")
     fun getTopCoinsInfo (
-        @Query(QUERY_PARAM_API_KEY) apiKey : String = "",
+        @Query(QUERY_PARAM_API_KEY) apiKey : String = "d45a9628fc2cd8fa51906231f5bbd26fd4689a32356b071f307a362215cf45da",
         @Query(QUERY_PARAM_LIMIT) limit : Int = 10,
         @Query(QUERY_PARAM_TO_SYMBOL) tSym : String = CURRENCY
     ) : Single<CoinInfoListOfData>
 
     @GET("pricemultifull")
     fun getFullPriceList (
-        @Query(QUERY_PARAM_API_KEY) apiKey : String = "",
+        @Query(QUERY_PARAM_API_KEY) apiKey : String = "d45a9628fc2cd8fa51906231f5bbd26fd4689a32356b071f307a362215cf45da",
         @Query(QUERY_PARAM_FROM_SYMBOLS) fSyms : String,
         @Query(QUERY_PARAM_TO_SYMBOLS) tSyms : String = CURRENCY
 
-    ) : Single<CoinInfoListOfData>
+    ) : Single<CoinPriceInfoRawData>
 
 
 

@@ -1,12 +1,13 @@
-package com.masliaiev.cryptoapp
+package com.masliaiev.cryptoapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.masliaiev.cryptoapp.adapters.CoinInfoAdapter
-import com.masliaiev.cryptoapp.pojo.CoinPriceInfo
+import com.masliaiev.cryptoapp.R
+import com.masliaiev.cryptoapp.presentation.adapters.CoinInfoAdapter
+import com.masliaiev.cryptoapp.data.network.model.CoinInfoDto
 
 class CoinPriceListActivity : AppCompatActivity() {
 
@@ -19,18 +20,18 @@ class CoinPriceListActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[CoinViewModel(application)::class.java]
         val adapter = CoinInfoAdapter(this)
         adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
-            override fun onCoinClick(coinPriceInfo: CoinPriceInfo) {
+            override fun onCoinClick(coinInfoDto: CoinInfoDto) {
                 val intent = CoinDetailActivity.newIntent(
                     this@CoinPriceListActivity,
-                    coinPriceInfo.fromSymbol
+                    coinInfoDto.fromSymbol
                 )
                 startActivity(intent)
             }
         }
         rvCoinPriceList = findViewById(R.id.rvCoinPriceList)
         rvCoinPriceList.adapter = adapter
-        viewModel.priceList.observe(this, Observer {
-            adapter.coinInfoList = it
+        viewModel.coinInfoList.observe(this, Observer {
+            adapter.coinInfoDtoList = it
         })
     }
 }

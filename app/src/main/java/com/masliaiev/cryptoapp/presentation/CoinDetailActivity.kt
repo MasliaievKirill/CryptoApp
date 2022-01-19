@@ -1,4 +1,4 @@
-package com.masliaiev.cryptoapp
+package com.masliaiev.cryptoapp.presentation
 
 import android.content.Context
 import android.content.Intent
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.masliaiev.cryptoapp.R
 import com.squareup.picasso.Picasso
 
 class CoinDetailActivity : AppCompatActivity() {

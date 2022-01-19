@@ -1,4 +1,4 @@
-package com.masliaiev.cryptoapp.adapters
+package com.masliaiev.cryptoapp.presentation.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,12 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.masliaiev.cryptoapp.R
-import com.masliaiev.cryptoapp.pojo.CoinPriceInfo
+import com.masliaiev.cryptoapp.data.network.model.CoinInfoDto
 import com.squareup.picasso.Picasso
 
 class CoinInfoAdapter (private val context: Context) : RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder>() {
 
-    var coinInfoList: List<CoinPriceInfo> = listOf()
+    var coinInfoDtoList: List<CoinInfoDto> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -28,7 +28,7 @@ class CoinInfoAdapter (private val context: Context) : RecyclerView.Adapter<Coin
     }
 
     override fun onBindViewHolder(holder: CoinInfoViewHolder, position: Int) {
-        val coin = coinInfoList[position]
+        val coin = coinInfoDtoList[position]
         with(holder) {
             val symbolsTemplate = context.resources.getString(R.string.symbols_template)
             val lastUpdateTemplate = context.resources.getString(R.string.last_update_template)
@@ -42,7 +42,7 @@ class CoinInfoAdapter (private val context: Context) : RecyclerView.Adapter<Coin
         }
     }
 
-    override fun getItemCount() = this.coinInfoList.size
+    override fun getItemCount() = this.coinInfoDtoList.size
 
 
     inner class CoinInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -55,6 +55,6 @@ class CoinInfoAdapter (private val context: Context) : RecyclerView.Adapter<Coin
     }
 
     interface OnCoinClickListener {
-        fun onCoinClick (coinPriceInfo: CoinPriceInfo)
+        fun onCoinClick (coinInfoDto: CoinInfoDto)
     }
 }

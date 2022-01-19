@@ -1,0 +1,35 @@
+package com.masliaiev.cryptoapp.presentation
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
+import com.masliaiev.cryptoapp.data.network.model.CoinInfoDto
+import com.masliaiev.cryptoapp.data.repository.CoinRepositoryImpl
+import com.masliaiev.cryptoapp.domain.CoinRepository
+import com.masliaiev.cryptoapp.domain.GetCoinInfoListUseCase
+import com.masliaiev.cryptoapp.domain.GetCoinInfoUseCase
+import com.masliaiev.cryptoapp.domain.LoadDataUseCase
+import kotlinx.coroutines.launch
+
+class CoinViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val repository = CoinRepositoryImpl(application)
+
+    private val getCoinInfoListUseCase = GetCoinInfoListUseCase(repository)
+    private val getCoinInfoUseCase = GetCoinInfoUseCase(repository)
+    private val loadDataUseCase = LoadDataUseCase(repository)
+
+    val coinInfoList = getCoinInfoListUseCase()
+
+    fun getDetailInfo(fSym: String) = getCoinInfoUseCase(fSym)
+
+    init {
+        viewModelScope.launch {
+            loadDataUseCase()
+        }
+
+    }
+
+
+}

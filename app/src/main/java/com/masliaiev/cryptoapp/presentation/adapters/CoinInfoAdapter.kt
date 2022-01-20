@@ -8,11 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.masliaiev.cryptoapp.R
+import com.masliaiev.cryptoapp.databinding.ItemCoinInfoBinding
 import com.masliaiev.cryptoapp.domain.CoinInfo
 import com.squareup.picasso.Picasso
 
 class CoinInfoAdapter(private val context: Context) :
-    RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder>() {
+    RecyclerView.Adapter<CoinInfoViewHolder>() {
 
     var coinInfoDtoList: List<CoinInfo> = listOf()
         set(value) {
@@ -23,14 +24,14 @@ class CoinInfoAdapter(private val context: Context) :
     var onCoinClickListener: OnCoinClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinInfoViewHolder {
-        val view =
+        val binding = ItemCoinInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             LayoutInflater.from(parent.context).inflate(R.layout.item_coin_info, parent, false)
-        return CoinInfoViewHolder(view)
+        return CoinInfoViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CoinInfoViewHolder, position: Int) {
         val coin = coinInfoDtoList[position]
-        with(holder) {
+        with(holder.binding) {
             val symbolsTemplate = context.resources.getString(R.string.symbols_template)
             val lastUpdateTemplate = context.resources.getString(R.string.last_update_template)
             tvSymbols.text = String.format(symbolsTemplate, coin.fromSymbol, coin.toSymbol)
@@ -38,23 +39,14 @@ class CoinInfoAdapter(private val context: Context) :
             tvRefreshTime.text =
                 String.format(lastUpdateTemplate, coin.lastUpdate)
             Picasso.get().load(coin.imageUrl).into(ivLogoCoin)
-        }
-        holder.itemView.setOnClickListener {
-            onCoinClickListener?.onCoinClick(coin)
+            root.setOnClickListener {
+                onCoinClickListener?.onCoinClick(coin)
+            }
+
         }
     }
 
     override fun getItemCount() = this.coinInfoDtoList.size
-
-
-    inner class CoinInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val ivLogoCoin: ImageView = itemView.findViewById(R.id.ivLogoCoin)
-        val tvSymbols: TextView = itemView.findViewById(R.id.tvSymbols)
-        val tvPrice: TextView = itemView.findViewById(R.id.tvPrice)
-        val tvRefreshTime: TextView = itemView.findViewById(R.id.tvRefreshTime)
-
-
-    }
 
     interface OnCoinClickListener {
         fun onCoinClick(coinInfoDto: CoinInfo)

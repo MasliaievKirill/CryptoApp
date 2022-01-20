@@ -10,9 +10,9 @@ data class CoinInfoDbModel(
     val fromSymbol: String,
     val toSymbol: String?,
     val price: Double?,
-    val lastUpdate: Int?,
+    val lastUpdate: Long?,
     val highDay: Double?,
     val lowDay: Double?,
     val lastMarket: String?,
-    val imageUrl: String?
+    val imageUrl: String
 )

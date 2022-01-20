@@ -8,12 +8,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.masliaiev.cryptoapp.R
-import com.masliaiev.cryptoapp.data.network.model.CoinInfoDto
+import com.masliaiev.cryptoapp.domain.CoinInfo
 import com.squareup.picasso.Picasso
 
-class CoinInfoAdapter (private val context: Context) : RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder>() {
+class CoinInfoAdapter(private val context: Context) :
+    RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder>() {
 
-    var coinInfoDtoList: List<CoinInfoDto> = listOf()
+    var coinInfoDtoList: List<CoinInfo> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -34,8 +35,9 @@ class CoinInfoAdapter (private val context: Context) : RecyclerView.Adapter<Coin
             val lastUpdateTemplate = context.resources.getString(R.string.last_update_template)
             tvSymbols.text = String.format(symbolsTemplate, coin.fromSymbol, coin.toSymbol)
             tvPrice.text = coin.price.toString()
-            tvRefreshTime.text = String.format(lastUpdateTemplate, coin.getFormattedTime())
-            Picasso.get().load(coin.getFullImageUrl()).into(ivLogoCoin)
+            tvRefreshTime.text =
+                String.format(lastUpdateTemplate, coin.lastUpdate)
+            Picasso.get().load(coin.imageUrl).into(ivLogoCoin)
         }
         holder.itemView.setOnClickListener {
             onCoinClickListener?.onCoinClick(coin)
@@ -55,6 +57,6 @@ class CoinInfoAdapter (private val context: Context) : RecyclerView.Adapter<Coin
     }
 
     interface OnCoinClickListener {
-        fun onCoinClick (coinInfoDto: CoinInfoDto)
+        fun onCoinClick(coinInfoDto: CoinInfo)
     }
 }

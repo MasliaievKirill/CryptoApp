@@ -3,13 +3,11 @@ package com.masliaiev.cryptoapp.data.network.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
-
 import com.google.gson.annotations.SerializedName
-import com.masliaiev.cryptoapp.utils.convertTimestampToTime
 
 
 @Entity(tableName = "full_price_list")
-data class CoinInfoDto (
+data class CoinInfoDto(
     @SerializedName("TYPE")
     @Expose
     val type: String?,
@@ -37,7 +35,7 @@ data class CoinInfoDto (
 
     @SerializedName("LASTUPDATE")
     @Expose
-    val lastUpdate: Int?,
+    val lastUpdate: Long?,
 
     @SerializedName("MEDIAN")
     @Expose
@@ -198,13 +196,4 @@ data class CoinInfoDto (
     @SerializedName("IMAGEURL")
     @Expose
     val imageUrl: String?
-) {
-    fun getFormattedTime (): String {
-        return convertTimestampToTime(lastUpdate?.toLong())
-    }
-
-    fun getFullImageUrl (): String {
-        val BASE_URL = "https://cryptocompare.com"
-        return BASE_URL + imageUrl
-    }
-}
+)

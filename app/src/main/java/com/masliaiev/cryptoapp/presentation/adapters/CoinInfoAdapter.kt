@@ -2,35 +2,27 @@ package com.masliaiev.cryptoapp.presentation.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.masliaiev.cryptoapp.R
 import com.masliaiev.cryptoapp.databinding.ItemCoinInfoBinding
 import com.masliaiev.cryptoapp.domain.CoinInfo
 import com.squareup.picasso.Picasso
 
 class CoinInfoAdapter(private val context: Context) :
-    RecyclerView.Adapter<CoinInfoViewHolder>() {
-
-    var coinInfoDtoList: List<CoinInfo> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    ListAdapter<CoinInfo, CoinInfoViewHolder>(CoinInfoDiffCallback()) {
 
     var onCoinClickListener: OnCoinClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinInfoViewHolder {
-        val binding = ItemCoinInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            LayoutInflater.from(parent.context).inflate(R.layout.item_coin_info, parent, false)
+        val binding =
+            ItemCoinInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.item_coin_info, parent, false)
         return CoinInfoViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CoinInfoViewHolder, position: Int) {
-        val coin = coinInfoDtoList[position]
+        val coin = getItem(position)
         with(holder.binding) {
             val symbolsTemplate = context.resources.getString(R.string.symbols_template)
             val lastUpdateTemplate = context.resources.getString(R.string.last_update_template)
@@ -45,8 +37,6 @@ class CoinInfoAdapter(private val context: Context) :
 
         }
     }
-
-    override fun getItemCount() = this.coinInfoDtoList.size
 
     interface OnCoinClickListener {
         fun onCoinClick(coinInfoDto: CoinInfo)

@@ -1,16 +1,11 @@
 package com.masliaiev.cryptoapp.presentation
 
-import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
-import com.masliaiev.cryptoapp.R
-import com.masliaiev.cryptoapp.presentation.adapters.CoinInfoAdapter
-import com.masliaiev.cryptoapp.data.network.model.CoinInfoDto
 import com.masliaiev.cryptoapp.databinding.ActivityCoinPriceListBinding
 import com.masliaiev.cryptoapp.domain.CoinInfo
+import com.masliaiev.cryptoapp.presentation.adapters.CoinInfoAdapter
 
 class CoinPriceListActivity : AppCompatActivity() {
 
@@ -35,8 +30,8 @@ class CoinPriceListActivity : AppCompatActivity() {
             }
         }
         binding.rvCoinPriceList.adapter = adapter
-        viewModel.coinInfoList.observe(this){
-            adapter.coinInfoDtoList = it
+        viewModel.coinInfoList.observe(this) {
+            adapter.submitList(it)
         }
     }
 }

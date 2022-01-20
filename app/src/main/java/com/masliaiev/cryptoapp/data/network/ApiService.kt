@@ -9,14 +9,14 @@ interface ApiService {
 
     @GET("top/totalvolfull")
     suspend fun getTopCoinsInfo(
-        @Query(QUERY_PARAM_API_KEY) apiKey: String = "d45a9628fc2cd8fa51906231f5bbd26fd4689a32356b071f307a362215cf45da",
+        @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
         @Query(QUERY_PARAM_LIMIT) limit: Int = 10,
         @Query(QUERY_PARAM_TO_SYMBOL) tSym: String = CURRENCY
     ): CoinNamesListDto
 
     @GET("pricemultifull")
     suspend fun getFullPriceList(
-        @Query(QUERY_PARAM_API_KEY) apiKey: String = "d45a9628fc2cd8fa51906231f5bbd26fd4689a32356b071f307a362215cf45da",
+        @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
         @Query(QUERY_PARAM_FROM_SYMBOLS) fSyms: String,
         @Query(QUERY_PARAM_TO_SYMBOLS) tSyms: String = CURRENCY
 
@@ -31,6 +31,8 @@ interface ApiService {
         private const val QUERY_PARAM_FROM_SYMBOLS = "fsyms"
 
         private const val CURRENCY = "USD"
+
+        private const val API_KEY = "d45a9628fc2cd8fa51906231f5bbd26fd4689a32356b071f307a362215cf45da"
 
     }
 }

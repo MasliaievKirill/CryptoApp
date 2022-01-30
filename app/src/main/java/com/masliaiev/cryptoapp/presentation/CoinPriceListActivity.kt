@@ -7,19 +7,28 @@ import com.masliaiev.cryptoapp.R
 import com.masliaiev.cryptoapp.databinding.ActivityCoinPriceListBinding
 import com.masliaiev.cryptoapp.domain.CoinInfo
 import com.masliaiev.cryptoapp.presentation.adapters.CoinInfoAdapter
+import javax.inject.Inject
 
 class CoinPriceListActivity : AppCompatActivity() {
 
     private lateinit var viewModel: CoinViewModel
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     private val binding by lazy {
         ActivityCoinPriceListBinding.inflate(layoutInflater)
     }
 
+    private val component by lazy {
+        (application as CoinApp).component
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this)[CoinViewModel(application)::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[CoinViewModel::class.java]
         val adapter = CoinInfoAdapter(this)
         adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
             override fun onCoinClick(coinInfo: CoinInfo) {
